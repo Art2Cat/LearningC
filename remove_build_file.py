@@ -12,12 +12,13 @@ def remove_file(path):
 
 
 def explore(dir_path):
-    for root, dirs, files in os.walk(dir_path):
-        if '.git' not in dirs:
-            for file in files:
-                path = os.path.join(root, os.path.basename(file))
-                if '.exe' in file or '.c.o' in file or '.' not in file or '.out' in file:
-                    remove_file(path)
+    for root, _, files in os.walk(dir_path):
+        files[:] = [f for f in files if '.exe' in f or '.c.o' in f
+                    or '.' not in f or '.out' in f]
+        for file in files:
+            path = os.path.join(root, os.path.basename(file))
+            if '.git' not in path:
+                remove_file(path)
 
 
 def main(dir):
