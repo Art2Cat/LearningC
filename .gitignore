@@ -1,6 +1,9 @@
 
 .idea/
 .vscode/
+*/*/CMakeFiles/
+*/*/CMakeCache.txt
+*/*/Makefile
 */*/*/CMakeFiles/
 */*/*/CMakeCache.txt
 */*/*/Makefile
