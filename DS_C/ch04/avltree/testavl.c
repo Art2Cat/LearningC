@@ -1,17 +1,21 @@
 #include <stdio.h>
 #include "avltree.h"
 
-main() {
+int main(int argc, char **argv) {
   AvlTree T;
   Position P;
   int i;
   int j = 0;
 
   T = MakeEmpty(NULL);
-  for (i = 0; i < 50; i++, j = (j + 7) % 50) T = Insert(j, T);
-  for (i = 0; i < 50; i++)
-    if ((P = Find(i, T)) == NULL || Retrieve(P) != i)
+  for (i = 0; i < 50; i++, j = (j + 7) % 50) {
+    T = Insert(j, T);
+  }
+  for (i = 0; i < 50; i++) {
+    if ((P = Find(i, T)) == NULL || Retrieve(P) != i) {
       printf("Error at %d\n", i);
+    }
+  }
 
   /* for( i = 0; i < 50; i += 2 )
          T = Delete( i, T );
