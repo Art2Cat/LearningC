@@ -19,37 +19,45 @@ AvlTree MakeEmpty(AvlTree T) {
 }
 
 Position Find(ElementType X, AvlTree T) {
-  if (T == NULL) return NULL;
-  if (X < T->Element)
+  if (T == NULL) {
+    return NULL;
+  }
+  if (X < T->Element) {
     return Find(X, T->Left);
-  else if (X > T->Element)
+  } else if (X > T->Element) {
     return Find(X, T->Right);
-  else
+  } else {
     return T;
+  }
 }
 
 Position FindMin(AvlTree T) {
-  if (T == NULL)
+  if (T == NULL) {
     return NULL;
-  else if (T->Left == NULL)
+  } else if (T->Left == NULL) {
     return T;
-  else
+  } else {
     return FindMin(T->Left);
+  }
 }
 
 Position FindMax(AvlTree T) {
-  if (T != NULL)
-    while (T->Right != NULL) T = T->Right;
+  if (T != NULL) {
+    while (T->Right != NULL) {
+      T = T->Right;
+    }
+  }
 
   return T;
 }
 
 /* START: fig4_36.txt */
 static int Height(Position P) {
-  if (P == NULL)
+  if (P == NULL) {
     return -1;
-  else
+  } else {
     return P->Height;
+  }
 }
 /* END */
 
@@ -124,27 +132,31 @@ AvlTree Insert(ElementType X, AvlTree T) {
   if (T == NULL) {
     /* Create and return a one-node tree */
     T = malloc(sizeof(struct AvlNode));
-    if (T == NULL)
+    if (T == NULL) {
       FatalError("Out of space!!!");
-    else {
+    } else {
       T->Element = X;
       T->Height = 0;
       T->Left = T->Right = NULL;
     }
   } else if (X < T->Element) {
     T->Left = Insert(X, T->Left);
-    if (Height(T->Left) - Height(T->Right) == 2)
-      if (X < T->Left->Element)
+    if (Height(T->Left) - Height(T->Right) == 2) {
+      if (X < T->Left->Element) {
         T = SingleRotateWithLeft(T);
-      else
+      } else {
         T = DoubleRotateWithLeft(T);
+      }
+    }
   } else if (X > T->Element) {
     T->Right = Insert(X, T->Right);
-    if (Height(T->Right) - Height(T->Left) == 2)
-      if (X > T->Right->Element)
+    if (Height(T->Right) - Height(T->Left) == 2) {
+      if (X > T->Right->Element) {
         T = SingleRotateWithRight(T);
-      else
+      } else {
         T = DoubleRotateWithRight(T);
+      }
+    }
   }
   /* Else X is in the tree already; we'll do nothing */
 

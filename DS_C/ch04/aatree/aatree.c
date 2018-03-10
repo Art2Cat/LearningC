@@ -16,7 +16,9 @@ struct AANode {
 AATree Initialize(void) {
   if (NullNode == NULL) {
     NullNode = malloc(sizeof(struct AANode));
-    if (NullNode == NULL) FatalError("Out of space!!!");
+    if (NullNode == NULL) {
+      FatalError("Out of space!!!");
+    }
     NullNode->Left = NullNode->Right = NullNode;
     NullNode->Level = 0;
   }
@@ -34,27 +36,34 @@ AATree MakeEmpty(AATree T) {
 }
 
 Position Find(ElementType X, AATree T) {
-  if (T == NullNode) return NullNode;
-  if (X < T->Element)
+  if (T == NullNode) {
+    return NullNode;
+  }
+  if (X < T->Element) {
     return Find(X, T->Left);
-  else if (X > T->Element)
+  } else if (X > T->Element) {
     return Find(X, T->Right);
-  else
+  } else {
     return T;
+  }
 }
 
 Position FindMin(AATree T) {
-  if (T == NullNode)
+  if (T == NullNode) {
     return NullNode;
-  else if (T->Left == NullNode)
+  } else if (T->Left == NullNode) {
     return T;
-  else
+  } else {
     return FindMin(T->Left);
+  }
 }
 
 Position FindMax(AATree T) {
-  if (T != NullNode)
-    while (T->Right != NullNode) T = T->Right;
+  if (T != NullNode) {
+    while (T->Right != NullNode) {
+      T = T->Right;
+    }
+  }
 
   return T;
 }
@@ -92,7 +101,9 @@ static Position SingleRotateWithRight(Position K1) {
 /* perform a rotation */
 
 AATree Skew(AATree T) {
-  if (T->Left->Level == T->Level) T = SingleRotateWithLeft(T);
+  if (T->Left->Level == T->Level) {
+    T = SingleRotateWithLeft(T);
+  }
   return T;
 }
 
@@ -113,65 +124,67 @@ AATree Insert(ElementType Item, AATree T) {
   if (T == NullNode) {
     /* Create and return a one-node tree */
     T = malloc(sizeof(struct AANode));
-    if (T == NULL)
+    if (T == NULL) {
       FatalError("Out of space!!!");
-    else {
+    } else {
       T->Element = Item;
       T->Level = 1;
       T->Left = T->Right = NullNode;
     }
-  } else if (Item < T->Element)
+  } else if (Item < T->Element) {
     T->Left = Insert(Item, T->Left);
-  else if (Item > T->Element)
+  } else if (Item > T->Element) {
     T->Right = Insert(Item, T->Right);
 
-  /* Otherwise it's a duplicate; do nothing */
+    /* Otherwise it's a duplicate; do nothing */
 
-  T = Skew(T);
-  T = Split(T);
-  return T;
-}
-/* END */
+    T = Skew(T);
+    T = Split(T);
+    return T;
+  }
+  /* END */
 
-/* START: fig12_38.txt */
-AATree Remove(ElementType Item, AATree T) {
-  static Position DeletePtr, LastPtr;
+  /* START: fig12_38.txt */
+  AATree Remove(ElementType Item, AATree T) {
+    static Position DeletePtr, LastPtr;
 
-  if (T != NullNode) {
-    /* Step 1: Search down tree */
-    /*         set LastPtr and DeletePtr */
-    LastPtr = T;
-    if (Item < T->Element)
-      T->Left = Remove(Item, T->Left);
-    else {
-      DeletePtr = T;
-      T->Right = Remove(Item, T->Right);
-    }
+    if (T != NullNode) {
+      /* Step 1: Search down tree */
+      /*         set LastPtr and DeletePtr */
+      LastPtr = T;
+      if (Item < T->Element)
+        T->Left = Remove(Item, T->Left);
+      else {
+        DeletePtr = T;
+        T->Right = Remove(Item, T->Right);
+      }
 
-    /* Step 2: If at the bottom of the tree and */
-    /*         item is present, we remove it */
-    if (T == LastPtr) {
-      if (DeletePtr != NullNode && Item == DeletePtr->Element) {
-        DeletePtr->Element = T->Element;
-        DeletePtr = NullNode;
-        T = T->Right;
-        free(LastPtr);
+      /* Step 2: If at the bottom of the tree and */
+      /*         item is present, we remove it */
+      if (T == LastPtr) {
+        if (DeletePtr != NullNode && Item == DeletePtr->Element) {
+          DeletePtr->Element = T->Element;
+          DeletePtr = NullNode;
+          T = T->Right;
+          free(LastPtr);
+        }
+      }
+
+      /* Step 3: Otherwise, we are not at the bottom; */
+      /*         rebalance */
+      if (T->Left->Level < T->Level - 1 || T->Right->Level < T->Level - 1) {
+        if (T->Right->Level > --T->Level) {
+          T->Right->Level = T->Level;
+        }
+        T = Skew(T);
+        T->Right = Skew(T->Right);
+        T->Right->Right = Skew(T->Right->Right);
+        T = Split(T);
+        T->Right = Split(T->Right);
       }
     }
-
-    /* Step 3: Otherwise, we are not at the bottom; */
-    /*         rebalance */
-    else if (T->Left->Level < T->Level - 1 || T->Right->Level < T->Level - 1) {
-      if (T->Right->Level > --T->Level) T->Right->Level = T->Level;
-      T = Skew(T);
-      T->Right = Skew(T->Right);
-      T->Right->Right = Skew(T->Right->Right);
-      T = Split(T);
-      T->Right = Split(T->Right);
-    }
+    return T;
   }
-  return T;
-}
-/* END */
+  /* END */
 
-ElementType Retrieve(Position P) { return P->Element; }
+  ElementType Retrieve(Position P) { return P->Element; }
