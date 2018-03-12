@@ -6,7 +6,7 @@ struct TreeNode {
   ElementType Element;
   SearchTree Left;
   SearchTree Right;
-};
+} tree_node_t;
 
 /* START: fig4_17.txt */
 SearchTree MakeEmpty(SearchTree T) {
@@ -62,23 +62,19 @@ Position FindMax(SearchTree T) {
 SearchTree Insert(ElementType X, SearchTree T) {
   if (T == NULL) {
     /* Create and return a one-node tree */
-    T = (SearchTree)malloc(sizeof(struct TreeNode));
+    T = (SearchTree)malloc(sizeof(tree_node_t));
     if (T == NULL) {
       FatalError("Out of space!!!");
     } else {
       T->Element = X;
       T->Left = T->Right = NULL;
     }
-  } else {
-    if (X < T->Element) {
-      T->Left = Insert(X, T->Left);
-    } else {
-      if (X > T->Element) {
-        T->Right = Insert(X, T->Right);
-      }
-      /* Else X is in the tree already; we'll do nothing */
-    }
+  } else if (X < T->Element) {
+    T->Left = Insert(X, T->Left);
+  } else if (X > T->Element) {
+    T->Right = Insert(X, T->Right);
   }
+  /* Else X is in the tree already; we'll do nothing */
   return T; /* Do not forget this line!! */
 }
 /* END */
@@ -93,26 +89,26 @@ SearchTree Delete(ElementType X, SearchTree T) {
     T->Left = Delete(X, T->Left);
   } else if (X > T->Element) { /* Go right */
     T->Right = Delete(X, T->Right);
-  } else { /* Found element to be deleted */
-           /* Two children */
-    if (T->Left && T->Right) {
-      /* Replace with smallest in right subtree */
-      TmpCell = FindMin(T->Right);
-      T->Element = TmpCell->Element;
-      T->Right = Delete(T->Element, T->Right);
-    } else {
-      /* One or zero children */
-      TmpCell = T;
-      if (T->Left == NULL) {
-        /* Also handles 0 children */
-        T = T->Right;
-      } else if (T->Right == NULL) {
-        T = T->Left;
-      }
+  } else if (T->Left && T->Right) {
+    /* Found element to be deleted */
+    /* Two children */
+    /* Replace with smallest in right subtree */
+
+    TmpCell = FindMin(T->Right);
+    T->Element = TmpCell->Element;
+    T->Right = Delete(T->Element, T->Right);
+  } else {
+    /* One or zero children */
+    TmpCell = T;
+    if (T->Left == NULL) {
+      /* Also handles 0 children */
+      T = T->Right;
+    } else if (T->Right == NULL) {
+      T = T->Left;
     }
+
     free(TmpCell);
   }
-
   return T;
 }
 /* END */

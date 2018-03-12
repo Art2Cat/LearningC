@@ -1,13 +1,6 @@
 #include "avltree.h"
-#include <stdlib.h>
 #include "fatal.h"
-
-struct AvlNode {
-  ElementType Element;
-  AvlTree Left;
-  AvlTree Right;
-  int Height;
-};
+#include <stdlib.h>
 
 AvlTree MakeEmpty(AvlTree T) {
   if (T != NULL) {
@@ -60,6 +53,13 @@ static int Height(Position P) {
   }
 }
 /* END */
+
+static int GetBalance(Position P) {
+  if (P == NULL) {
+    return 0;
+  }
+  return Height(P->Left) - Height(P->Right);
+}
 
 static int Max(int Lhs, int Rhs) { return Lhs > Rhs ? Lhs : Rhs; }
 
@@ -131,7 +131,7 @@ static Position DoubleRotateWithRight(Position K1) {
 AvlTree Insert(ElementType X, AvlTree T) {
   if (T == NULL) {
     /* Create and return a one-node tree */
-    T = malloc(sizeof(struct AvlNode));
+    T = (AvlTree)malloc(sizeof(avl_node_t));
     if (T == NULL) {
       FatalError("Out of space!!!");
     } else {
@@ -166,7 +166,55 @@ AvlTree Insert(ElementType X, AvlTree T) {
 /* END */
 
 AvlTree Delete(ElementType X, AvlTree T) {
-  printf("Sorry; Delete is unimplemented; %d remains\n", X);
+  Position tmpCell;
+  if (T == NULL) {
+    Error("Element not found");
+  } else if (X < T->Element) {
+    T->Left = Delete(X, T->Left);
+  } else if (X > T->Element) {
+    T->Right = Delete(X, T->Right);
+  } else if (T->Left && T->Right) {
+    tmpCell = FindMin(T->Right);
+    T->Element = tmpCell->Element;
+    T->Right = Delete(T->Element, T->Right);
+  } else {
+    if (T->Left == NULL || T->Right == NULL) {
+      tmpCell = T->Left ? T->Left : T->Right;
+      if (tmpCell == NULL) {
+        tmpCell = T;
+        T = NULL;
+      } else {
+        *T = *tmpCell;
+      }
+      free(tmpCell);
+    } else {
+      tmpCell = FindMin(T->Right);
+      T->Element = tmpCell->Element;
+
+      T->Right = Delete(tmpCell->Element, T->Right);
+    }
+  }
+  if (T == NULL) {
+    Error("Element not found");
+  }
+
+  T->Height = 1 + Max(Height(T->Left), Height(T->Right));
+
+  int balance = GetBalance(T);
+
+  if (balance > 1 && GetBalance(T->Left) >= 0) {
+    return SingleRotateWithRight(T);
+  }
+  if (balance > 1 && GetBalance(T->Left) < 0) {
+    return DoubleRotateWithRight(T);
+  }
+
+  if (balance < -1 && GetBalance(T->Right) >= 0) {
+    return SingleRotateWithLeft(T);
+  }
+  if (balance < -1 && GetBalance(T->Right) < 0) {
+    return DoubleRotateWithRight(T);
+  }
   return T;
 }
 

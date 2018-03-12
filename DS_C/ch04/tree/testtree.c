@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include "tree.h"
+#include <stdio.h>
 
 int main(int argc, char **argv) {
   SearchTree T;
@@ -32,6 +32,8 @@ int main(int argc, char **argv) {
   }
 
   printf("Min is %d, Max is %d\n", Retrieve(FindMin(T)), Retrieve(FindMax(T)));
+
+  MakeEmpty(T);
 
   return 0;
 }
