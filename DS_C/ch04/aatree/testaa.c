@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include "aatree.h"
+#include <stdio.h>
 
 #define NumItems 20
 
@@ -38,5 +38,6 @@ int main(int argc, char **argv) {
 
   printf("Min is %d, Max is %d\n", Retrieve(FindMin(T)), Retrieve(FindMax(T)));
 
+  MakeEmpty(T);
   return 0;
 }
