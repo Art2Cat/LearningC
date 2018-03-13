@@ -1,5 +1,5 @@
-#include <stdlib.h>
 #include "fatal.h"
+#include <stdlib.h>
 
 typedef int ElementType;
 
@@ -9,6 +9,13 @@ typedef int ElementType;
 struct AANode;
 typedef struct AANode *Position;
 typedef struct AANode *AATree;
+
+struct AANode {
+  ElementType Element;
+  AATree Left;
+  AATree Right;
+  int Level;
+} aa_node_t;
 
 AATree MakeEmpty(AATree T);
 Position Find(ElementType X, AATree T);

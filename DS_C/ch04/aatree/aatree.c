@@ -1,21 +1,14 @@
 #include "aatree.h"
-#include <stdlib.h>
 #include "fatal.h"
+#include <stdlib.h>
 
 /* START: fig12_27.txt */
 /* Returned for failures */
 Position NullNode = NULL; /* Needs more initialization */
 
-struct AANode {
-  ElementType Element;
-  AATree Left;
-  AATree Right;
-  int Level;
-};
-
 AATree Initialize(void) {
   if (NullNode == NULL) {
-    NullNode = malloc(sizeof(struct AANode));
+    NullNode = (AATree)malloc(sizeof(aa_node_t));
     if (NullNode == NULL) {
       FatalError("Out of space!!!");
     }
@@ -123,7 +116,7 @@ AATree Split(AATree T) {
 AATree Insert(ElementType Item, AATree T) {
   if (T == NullNode) {
     /* Create and return a one-node tree */
-    T = malloc(sizeof(struct AANode));
+    T = (AATree)malloc(sizeof(aa_node_t));
     if (T == NULL) {
       FatalError("Out of space!!!");
     } else {
@@ -142,49 +135,51 @@ AATree Insert(ElementType Item, AATree T) {
     T = Split(T);
     return T;
   }
-  /* END */
+  return T;
+}
+/* END */
 
-  /* START: fig12_38.txt */
-  AATree Remove(ElementType Item, AATree T) {
-    static Position DeletePtr, LastPtr;
+/* START: fig12_38.txt */
+AATree Remove(ElementType Item, AATree T) {
+  static Position DeletePtr, LastPtr;
 
-    if (T != NullNode) {
-      /* Step 1: Search down tree */
-      /*         set LastPtr and DeletePtr */
-      LastPtr = T;
-      if (Item < T->Element)
-        T->Left = Remove(Item, T->Left);
-      else {
-        DeletePtr = T;
-        T->Right = Remove(Item, T->Right);
-      }
+  if (T != NullNode) {
+    /* Step 1: Search down tree */
+    /*         set LastPtr and DeletePtr */
+    LastPtr = T;
+    if (Item < T->Element)
+      T->Left = Remove(Item, T->Left);
+    else {
+      DeletePtr = T;
+      T->Right = Remove(Item, T->Right);
+    }
 
-      /* Step 2: If at the bottom of the tree and */
-      /*         item is present, we remove it */
-      if (T == LastPtr) {
-        if (DeletePtr != NullNode && Item == DeletePtr->Element) {
-          DeletePtr->Element = T->Element;
-          DeletePtr = NullNode;
-          T = T->Right;
-          free(LastPtr);
-        }
-      }
-
-      /* Step 3: Otherwise, we are not at the bottom; */
-      /*         rebalance */
-      if (T->Left->Level < T->Level - 1 || T->Right->Level < T->Level - 1) {
-        if (T->Right->Level > --T->Level) {
-          T->Right->Level = T->Level;
-        }
-        T = Skew(T);
-        T->Right = Skew(T->Right);
-        T->Right->Right = Skew(T->Right->Right);
-        T = Split(T);
-        T->Right = Split(T->Right);
+    /* Step 2: If at the bottom of the tree and */
+    /*         item is present, we remove it */
+    if (T == LastPtr) {
+      if (DeletePtr != NullNode && Item == DeletePtr->Element) {
+        DeletePtr->Element = T->Element;
+        DeletePtr = NullNode;
+        T = T->Right;
+        free(LastPtr);
       }
     }
-    return T;
-  }
-  /* END */
 
-  ElementType Retrieve(Position P) { return P->Element; }
+    /* Step 3: Otherwise, we are not at the bottom; */
+    /*         rebalance */
+    if (T->Left->Level < T->Level - 1 || T->Right->Level < T->Level - 1) {
+      if (T->Right->Level > --T->Level) {
+        T->Right->Level = T->Level;
+      }
+      T = Skew(T);
+      T->Right = Skew(T->Right);
+      T->Right->Right = Skew(T->Right->Right);
+      T = Split(T);
+      T->Right = Split(T->Right);
+    }
+  }
+  return T;
+}
+/* END */
+
+ElementType Retrieve(Position P) { return P->Element; }
