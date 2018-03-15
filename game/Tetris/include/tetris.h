@@ -1,12 +1,9 @@
 #ifndef _TETRIS_H
 #define _TETRIS_H
-struct Coordinate {
-  int x;
-  int y;
-} coordinate_t;
 
 struct Tetris {
-  struct Coordinate c;
+  int x;
+  int y;
   int flag;
   int next;
   int speed;
@@ -15,8 +12,7 @@ struct Tetris {
   int level;
 } tetris_t;
 
-typedef Coordinate *coordinate_p;
-typedef Tetris *tetris_p;
+typedef struct Tetris *tetris_p;
 
 enum color {
   black = 0,
@@ -37,7 +33,7 @@ enum color {
 };
 
 int color(int c);
-void goto_coordinate(coordinate_p c);
+void goto_coordinate(int x, int y);
 void draw_game_frame();
 void flag(tetris_p t);
 void make_tetris(tetris_p t);
