@@ -34,17 +34,19 @@ enum color {
 
 int color(int c);
 void goto_coordinate(int x, int y);
-void draw_game_frame();
+void display_main(void);
+void draw_game_frame(void);
 void flag(tetris_p t);
 void make_tetris(tetris_p t);
 void print_tetris(tetris_p t);
-void clear_tetris(tetris_p t);
+void clean_tetris(tetris_p t);
 int if_move(tetris_p t);
 void del_full_line(tetris_p t);
 void play_game();
 void game_rule();
-void explation();
+void explanation();
 void replay(tetris_p t);
+void draw_welcome();
 void draw_title();
 void draw_flower();
 void close();
