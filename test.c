@@ -16,7 +16,6 @@ int main(void) {
   printf("%d\n", strcmp(test, "test"));
 
   printf("%s\n", test);
-  print(test, "test");
 
   char *t1 = "01001001";
 
