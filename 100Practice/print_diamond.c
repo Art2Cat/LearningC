@@ -14,11 +14,15 @@ void diamond(int times, char symbol) {
   n = times;
   space = n - 1;
   for (k = 1; k <= n; k++) {
-    for (c = 1; c <= space; c++) printf(" ");
+    for (c = 1; c <= space; c++) {
+      printf(" ");
+    }
 
     space--;
 
-    for (c = 1; c <= 2 * k - 1; c++) printf("%c", symbol);
+    for (c = 1; c <= 2 * k - 1; c++) {
+      printf("%c", symbol);
+    }
 
     printf("\n");
   }
@@ -26,11 +30,15 @@ void diamond(int times, char symbol) {
   space = 1;
 
   for (k = 1; k <= n - 1; k++) {
-    for (c = 1; c <= space; c++) printf(" ");
+    for (c = 1; c <= space; c++) {
+      printf(" ");
+    }
 
     space++;
 
-    for (c = 1; c <= 2 * (n - k) - 1; c++) printf("%c", symbol);
+    for (c = 1; c <= 2 * (n - k) - 1; c++) {
+      printf("%c", symbol);
+    }
 
     printf("\n");
   }
