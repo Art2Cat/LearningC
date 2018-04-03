@@ -9,7 +9,7 @@ int counter;
 
 void *addThings(void *threadId) {
   for (int i = 0; i < NUM_INCREMENT; i++) {
-    __sync_add_add_fetch(&counter, 1);
+    __sync_add_and_fetch(&counter, 1);
   }
   pthread_exit(NULL);
 }
