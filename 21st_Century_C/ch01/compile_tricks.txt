@@ -1,0 +1,11 @@
+gcc -I/user/local/include use_useful.c -o use_useful -L/usr/local/lib -luseful
+
+-I adds the given path to the include search path, which the compiler searches for header files you #included in your code.
+
+-L adds to the library search path.
+
+use -l<library_name>
+for example: Libbroad and Libgeneral
+gcc specific.o -lbroad -lgeneral
+don't try like this:
+gcc -lbroad -lgeneral specific.o
