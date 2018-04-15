@@ -9,3 +9,8 @@ for example: Libbroad and Libgeneral
 gcc specific.o -lbroad -lgeneral
 don't try like this:
 gcc -lbroad -lgeneral specific.o
+
+pkg-config --cflags gsl
+pkg-config --libs gsl
+
+gcc gsl_erf.c `pkg-config --libs gsl`
