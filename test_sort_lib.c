@@ -80,6 +80,42 @@ void test_shell_sort() {
   print_array(arr, n);
 }
 
+void test_merge_sort() {
+  int arr[] = {
+      6, 5, 3, 1, 8, 11, 7, 2, 4, 9,
+  };
+  printf("Origin: ");
+  int n = sizeof(arr) / sizeof(int);
+  print_array(arr, n);
+  merge_sort(arr, n);
+  printf("Merge sort result: ");
+  print_array(arr, n);
+}
+
+void test_heap_sort() {
+  int arr[] = {
+      6, 5, 3, 1, 8, 11, 7, 2, 4, 9,
+  };
+  printf("Origin: ");
+  int n = sizeof(arr) / sizeof(int);
+  print_array(arr, n);
+  heap_sort(arr, n);
+  printf("Heap sort result: ");
+  print_array(arr, n);
+}
+
+void test_quick_sort() {
+  int arr[] = {
+      6, 5, 3, 1, 8, 11, 7, 2, 4, 9,
+  };
+  printf("Origin: ");
+  int n = sizeof(arr) / sizeof(int);
+  print_array(arr, n);
+  quick_sort(arr, 0, n - 1);
+  printf("Quick sort result: ");
+  print_array(arr, n);
+}
+
 int main(void) {
   test_bubble_sort();
   test_cocktail_sort();
@@ -87,5 +123,8 @@ int main(void) {
   test_insertion_sort();
   test_insertion_sort_dichotomy();
   test_shell_sort();
+  test_merge_sort();
+  test_heap_sort();
+  test_quick_sort();
   return 0;
 }
