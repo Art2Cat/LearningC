@@ -20,12 +20,10 @@ int main(void) {
   car *cars = new car[size];
   for (int i = 0; i < size; i++) {
     cout << "Car #" << i + 1 << endl;
-    car *c = new car;
     cout << "Please enter the make: ";
-    cin >> c->maker;
+    cin >> cars[i].maker;
     cout << "Please enter the year made: ";
-    cin >> c->made_of_year;
-    cars[i] = *c;
+    cin >> cars[i].made_of_year;
   }
   cout << "Here is your collection:" << endl;
   for (int j = 0; j < size; j++) {
