@@ -10,8 +10,6 @@ struct patron {
 
 const double LEVEL = 10000;
 
-void add_patron(patron *patrons, int len);
-
 int main() {
   using namespace std;
   string file_name;
@@ -31,10 +29,10 @@ int main() {
   inFile >> total;
   cout << "total line: " << total << endl;
   inFile.get();
-  patron patrons[total];
+  patron *patrons = new patron[total];
 
   for (int i = 0; i < total; i++) {
-    getline(inFile, (patrons + i)->name);
+    getline(inFile, patrons[i].name);
     inFile >> patrons[i].deposit;
     inFile.get();
   }
@@ -43,7 +41,7 @@ int main() {
 
   cout << "Grand Patrons:" << endl;
 
-  for (int i = 0; i < 10; i++) {
+  for (int i = 0; i < total; i++) {
     if (patrons[i].deposit >= LEVEL) {
       cout << "name: " << patrons[i].name << ", amount: " << patrons[i].deposit
            << endl;
@@ -52,25 +50,14 @@ int main() {
 
   cout << endl;
   cout << "Patrons:" << endl;
-  for (int i = 0; i < 10; i++) {
+  for (int i = 0; i < total; i++) {
     if (patrons[i].deposit > 0 && patrons[i].deposit < LEVEL) {
       cout << "name: " << patrons[i].name << ", amount: " << patrons[i].deposit
            << endl;
     }
   }
 
+  delete[] patrons;
+
   return 0;
-}
-
-void add_patron(patron *patrons, int len) {
-  using namespace std;
-  for (int i = 0; i < len; i++) {
-    patron *p = new patron;
-
-    cout << "Enter your name: ";
-    cin >> p->name;
-    cout << "Enter your sponsor amount: ";
-    cin >> p->deposit;
-    patrons[i] = *p;
-  }
 }

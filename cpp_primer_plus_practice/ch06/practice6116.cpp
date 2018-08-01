@@ -11,10 +11,11 @@ void add_patron(patron *patrons, int len);
 
 int main() {
   using namespace std;
-  patron patrons[10];
-  add_patron(patrons, 10);
-  cout << "Grand Patrons:" << endl;
+  patron *patrons = new patron[10];
 
+  add_patron(patrons, 10);
+
+  cout << "Grand Patrons:" << endl;
   for (int i = 0; i < 10; i++) {
     if (patrons[i].deposit >= LEVEL) {
       cout << "name: " << patrons[i].name << ", amount: " << patrons[i].deposit
@@ -31,6 +32,7 @@ int main() {
     }
   }
 
+  delete[] patrons;
   return 0;
 }
 
