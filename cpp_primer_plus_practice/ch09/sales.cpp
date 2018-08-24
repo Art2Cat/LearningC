@@ -30,18 +30,18 @@ namespace SALES {
 			cout << "sales[" << i << "]: ";
 
 			cin >> s.sales[i];
+			n++;
 			if (cin.fail()) {
 				s.sales[i] = 0.0;
 				break;
 			}
-			n++;
 		}
 
 		double total = 0.0;
 		double max = s.sales[0];
 		double min = s.sales[0];
 
-		for (int i = 0; i < n; i++) {
+		for (int i = 0; i < n - 1; i++) {
 			total += s.sales[i];
 			if (max < s.sales[i]) {
 				max = s.sales[i];
