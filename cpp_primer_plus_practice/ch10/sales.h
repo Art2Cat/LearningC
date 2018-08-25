@@ -19,7 +19,7 @@ namespace SALES {
 
 			void setSales(const double *, int);
 
-			void show() const;
+			void show();
 
 	};
 } // namespace SALES

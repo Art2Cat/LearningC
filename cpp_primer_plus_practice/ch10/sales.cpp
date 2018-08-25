@@ -54,7 +54,7 @@ namespace SALES {
 		average = total / n;
 	}
 
-	void Sales::show() const {
+	void Sales::show() {
 		cout << "Sales: { sales [";
 		for (int i = 0; i < QUARTERS; i++) {
 			cout << this->sales[i] << ",";

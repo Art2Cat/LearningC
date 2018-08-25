@@ -36,14 +36,14 @@ void Golf::setFullName(const char * name) {
 }
 
 const char * Golf::getFullName() const {
-	return fullname;
+	return this->fullname;
 }
 
 void Golf::setHandicap(int hc) { handicap = hc; }
 
 int Golf::getHandicap() const {
-	return handicap;
+	return this->handicap;
 }
-void Golf::showGolf() const {
-	cout << "Golf: " << (*this).getFullName() << ", " << this->getHandicap() << "." << endl;
+void Golf::showGolf() {
+	cout << "Golf: " << fullname << ", " << handicap << "." << endl;
 }

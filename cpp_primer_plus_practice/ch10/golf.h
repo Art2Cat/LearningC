@@ -21,7 +21,7 @@ class Golf {
 
 		int getHandicap() const;
 
-		void showGolf() const;
+		void showGolf();
 
 };
 
