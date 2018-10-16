@@ -1,5 +1,7 @@
 #include "sort_lib.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 static void swap(int arr[], int x, int y) {
   int temp = arr[x];
@@ -243,4 +245,44 @@ void quick_sort(int arr[], int left, int right) {
   int pivot_index = partition(arr, left, right);
   quick_sort(arr, left, pivot_index - 1);
   quick_sort(arr, pivot_index + 1, right);
+}
+
+static int *copy_array(const int *arr, int n) {
+  int *arr_copy = (int *)calloc(n, sizeof(int));
+  memcpy(arr_copy, arr, sizeof(int) * n);
+  return arr_copy;
+}
+
+void count_sort(int *arr, int n) {
+
+  int max = arr[0];
+  int min = arr[0];
+  for (int i = 0; i < n; i++) {
+    if (arr[i] > max) {
+      max = arr[i];
+    }
+    if (arr[i] < min) {
+      min = arr[i];
+    }
+  }
+  int range = max - min;
+  int count[range + 1];
+  memset(count, 0, sizeof(count));
+  //int *count = (int *)calloc(range + 1, sizeof(int));
+  for (int i = 0; i < n; i++) {
+    ++count[arr[i]];
+  }
+
+  for (int i = 1; i < range + 1; i++) {
+    count[i] += count[i - 1];
+  }
+
+  int *copy_of_array = (int *)calloc(n, sizeof(int));
+  memcpy(copy_of_array, arr, sizeof(int) * n);
+  for (int i = n - 1; i >= 0; i--) {
+    arr[count[copy_of_array[i] - min] - 1] = copy_of_array[i];
+    count[copy_of_array[i] - min]--;
+  }
+  free(copy_of_array);
+  //free(count);
 }

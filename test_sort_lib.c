@@ -9,7 +9,7 @@ void print_array(const int *arr, int n) {
 }
 
 void test_bubble_sort() {
-  int arr[] = {
+  int arr[10] = {
       6, 5, 3, 1, 8, 11, 7, 2, 4, 9,
   };
   printf("Origin: ");
@@ -21,7 +21,7 @@ void test_bubble_sort() {
 }
 
 void test_cocktail_sort() {
-  int arr[] = {
+  int arr[10] = {
       6, 5, 3, 1, 8, 11, 7, 2, 4, 9,
   };
   printf("Origin: ");
@@ -33,7 +33,7 @@ void test_cocktail_sort() {
 }
 
 void test_selection_sort() {
-  int arr[] = {
+  int arr[10] = {
       6, 5, 3, 1, 8, 11, 7, 2, 4, 9,
   };
   printf("Origin: ");
@@ -45,7 +45,7 @@ void test_selection_sort() {
 }
 
 void test_insertion_sort() {
-  int arr[] = {
+  int arr[10] = {
       6, 5, 3, 1, 8, 11, 7, 2, 4, 9,
   };
   printf("Origin: ");
@@ -57,7 +57,7 @@ void test_insertion_sort() {
 }
 
 void test_insertion_sort_dichotomy() {
-  int arr[] = {
+  int arr[10] = {
       6, 5, 3, 1, 8, 11, 7, 2, 4, 9,
   };
   printf("Origin: ");
@@ -69,7 +69,7 @@ void test_insertion_sort_dichotomy() {
 }
 
 void test_shell_sort() {
-  int arr[] = {
+  int arr[10] = {
       6, 5, 3, 1, 8, 11, 7, 2, 4, 9,
   };
   printf("Origin: ");
@@ -81,7 +81,7 @@ void test_shell_sort() {
 }
 
 void test_merge_sort() {
-  int arr[] = {
+  int arr[10] = {
       6, 5, 3, 1, 8, 11, 7, 2, 4, 9,
   };
   printf("Origin: ");
@@ -93,7 +93,7 @@ void test_merge_sort() {
 }
 
 void test_heap_sort() {
-  int arr[] = {
+  int arr[10] = {
       6, 5, 3, 1, 8, 11, 7, 2, 4, 9,
   };
   printf("Origin: ");
@@ -105,7 +105,7 @@ void test_heap_sort() {
 }
 
 void test_quick_sort() {
-  int arr[] = {
+  int arr[10] = {
       6, 5, 3, 1, 8, 11, 7, 2, 4, 9,
   };
   printf("Origin: ");
@@ -114,6 +114,17 @@ void test_quick_sort() {
   quick_sort(arr, 0, n - 1);
   printf("Quick sort result: ");
   print_array(arr, n);
+}
+
+void test_count_sort() {
+  int arr[10] = {
+      6, 5, 3, 1, 8, 0, 7, 2, 4, 9,
+  };
+  printf("Origin: ");
+  print_array(arr, 10);
+  count_sort(arr, 10);
+  printf("Count sort result: ");
+  print_array(arr, 10);
 }
 
 int main(void) {
@@ -126,5 +137,6 @@ int main(void) {
   test_merge_sort();
   test_heap_sort();
   test_quick_sort();
+  test_count_sort();
   return 0;
 }

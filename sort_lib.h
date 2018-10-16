@@ -104,4 +104,6 @@ void heap_sort(int arr[], int n);
  * the worst O(n) stability ---------- unstable
  */
 void quick_sort(int arr[], int n, int m);
+
+void count_sort(int arr[], int n);
 #endif
