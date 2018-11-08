@@ -1,33 +1,18 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
-void print(char *text, char *text2) { printf("%d\n", strcmp(text, text2)); }
-
+static int *copy_array(const int *arr, int n) {
+  int *arr_copy = (int *)calloc(n, sizeof(int));
+  memcpy(arr_copy, arr, sizeof(int) * n);
+  return arr_copy;
+}
 int main(void) {
-  char name[6] = "peter";
-  printf("fuck you %s\n", name);
-  int len = strlen(name);
-  printf("%*s\n", 30, name);
-  printf("strlen(name) :  %d\n", len);
+  int arr[5] = {1, 2, 3, 4, 5};
 
-  char *test;
-  test = "test";
-  // test = name;
-  printf("%d\n", strcmp(test, "test"));
-
-  printf("%s\n", test);
-
-  char *t1 = "01001001";
-
-  if (t1 == NULL) {
-    puts("null");
+  int *arr_copy = copy_array(arr, 5);
+  for (int i = 0; i < 5; i++) {
+    printf("%d : %d\n", arr[i], arr_copy[i]);
   }
-  int val = 0;
-  while (*t1 != '\0') {
-    printf("--%c\n", *t1++);
-    val = 2 * val + (*t1++ - '0');
-    printf("++ %d\n", val);
-  }
-  printf("%d\n", val);
   return 0;
 }
